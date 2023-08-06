@@ -2,30 +2,25 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class PlantCard extends StatefulWidget {
-  const PlantCard(
-      {super.key,
-      required this.plantname,
-      required this.price,
-      required this.imagePath,
-      required this.onTap
-    });
+class ReversedPlantCard extends StatefulWidget {
+  const ReversedPlantCard({super.key, required this.plantname, required this.price, required this.imagePath, required this.onTap});
+
   final String plantname;
   final String price;
   final String imagePath;
   final Function() onTap;
 
   @override
-  State<PlantCard> createState() => _PlantCardState();
+  State<ReversedPlantCard> createState() => _ReversedPlantCardState();
 }
 
-class _PlantCardState extends State<PlantCard> {
+class _ReversedPlantCardState extends State<ReversedPlantCard> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: widget.onTap,
       child: Container(
-        margin: const EdgeInsets.only(left: 40),
+        margin: const EdgeInsets.only(right: 40),
         child: Stack(clipBehavior: Clip.none, children: [
           Container(
             clipBehavior: Clip.hardEdge,
@@ -42,10 +37,10 @@ class _PlantCardState extends State<PlantCard> {
               children: [
                 Container(
                   clipBehavior: Clip.none,
-                  alignment: Alignment.centerRight,
+                  alignment: Alignment.centerLeft,
                   child: Column(children: [
                     Padding(
-                      padding: const EdgeInsets.only(right: 25),
+                      padding: const EdgeInsets.only(left: 25),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -63,16 +58,16 @@ class _PlantCardState extends State<PlantCard> {
                   ]),
                 ),
                 Positioned(
-                  right: -15,
+                  left: -15,
                   top: 0,
                   child: Container(
-                    alignment: Alignment.bottomLeft,
+                    alignment: Alignment.bottomRight,
                     decoration: const BoxDecoration(
                         color: Color.fromARGB(165, 153, 180, 121),
                         shape: BoxShape.rectangle,
                         borderRadius:
-                            BorderRadius.only(bottomLeft: Radius.circular(30))),
-                    padding: const EdgeInsets.only(top: 8, right: 12, bottom: 8),
+                            BorderRadius.only(bottomRight: Radius.circular(30))),
+                    padding: const EdgeInsets.only(top: 8, left: 12, bottom: 8),
                     child: ElevatedButton(
                       onPressed: () {},
                       style: ElevatedButton.styleFrom(
@@ -94,7 +89,7 @@ class _PlantCardState extends State<PlantCard> {
             ),
           ),
           Positioned(
-            left: -70,
+            right: -70,
             top: -93,
             child: Hero(
               tag: 'tag-${widget.imagePath}',

@@ -1,19 +1,22 @@
-import 'package:expandable_page_view/expandable_page_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:save_the_plant_ui/model/plant_model.dart';
+import 'package:save_the_plant_ui/providers/selected_plant_provider.dart';
+import 'package:save_the_plant_ui/screens/plant_details.dart';
+import 'package:save_the_plant_ui/widgets/plant_button.dart';
 import 'package:save_the_plant_ui/widgets/plant_card.dart';
+import 'package:save_the_plant_ui/widgets/reversed_plant_card.dart';
 
-class ScrollTwo extends StatelessWidget {
+class ScrollTwo extends ConsumerWidget {
   const ScrollTwo({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final shouldReverse =
-        List.generate(plants.length, (index) => index % 2 != 0);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final shouldReverse = List.generate(plants.length, (index) => index % 2 != 0);
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 221, 234, 208),
+      backgroundColor: const Color.fromARGB(255, 221, 234, 208),
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -47,7 +50,13 @@ class ScrollTwo extends StatelessWidget {
                 ),
               ),
             ),
-            // const SizedBox(height: 80),
+            const SizedBox(height: 15),
+            // Buttons
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              child: PlantButton(),
+            ),
+            const SizedBox(height: 10),
             Expanded(
               child: ListView.builder(
                 itemCount: plants.length,
@@ -55,20 +64,25 @@ class ScrollTwo extends StatelessWidget {
                   final items = plants[index];
                   return Center(
                     child: Padding(
-                      padding: const EdgeInsets.only(top: 100),
+                      padding: const EdgeInsets.only(top: 85),
                       child: shouldReverse[index]
-                          ? Transform(
-                              alignment: Alignment.center,
-                              transform: Matrix4.rotationY(3.14),
-                              child: PlantCard(
-                                  plantname: items.plantName,
-                                  price: items.price,
-                                  imagePath: items.imagePath),
-                            )
+                          ? ReversedPlantCard(
+                                plantname: items.plantName ?? '',
+                                price: items.price ?? '',
+                                imagePath: items.imagePath ?? '',
+                                onTap: () {
+                                  ref.read(selectedPlantProvider.notifier).state = items;
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => PlantDetailScreen()));
+                                },
+                          )
                           : PlantCard(
-                              plantname: items.plantName,
-                              price: items.price,
-                              imagePath: items.imagePath,
+                              plantname: items.plantName ?? '',
+                              price: items.price ?? '',
+                              imagePath: items.imagePath ?? '', 
+                              onTap: () { 
+                                ref.read(selectedPlantProvider.notifier).state = items;
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => PlantDetailScreen()));
+                               },
                             ),
                     ),
                   );
@@ -81,5 +95,4 @@ class ScrollTwo extends StatelessWidget {
     );
   }
 }
-
 
