@@ -1,25 +1,28 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class PlantCard extends StatefulWidget {
+class PlantCard extends ConsumerStatefulWidget {
   const PlantCard(
       {super.key,
       required this.plantname,
       required this.price,
       required this.imagePath,
-      required this.onTap
+      required this.onTap,
+      required this.onPressed,
     });
   final String plantname;
-  final String price;
+  final num price;
   final String imagePath;
-  final Function() onTap;
+  final Function()? onTap;
+  final void Function()? onPressed;
 
   @override
-  State<PlantCard> createState() => _PlantCardState();
+  ConsumerState<PlantCard> createState() => _PlantCardState();
 }
 
-class _PlantCardState extends State<PlantCard> {
+class _PlantCardState extends ConsumerState<PlantCard> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -54,7 +57,7 @@ class _PlantCardState extends State<PlantCard> {
                               style: GoogleFonts.lato(
                                   fontSize: 23, fontWeight: FontWeight.w700)),
                           const SizedBox(height: 5),
-                          Text(widget.price,
+                          Text('\$${widget.price}',
                               style: GoogleFonts.lato(
                                   fontSize: 37, fontWeight: FontWeight.w900))
                         ],
@@ -74,7 +77,7 @@ class _PlantCardState extends State<PlantCard> {
                             BorderRadius.only(bottomLeft: Radius.circular(30))),
                     padding: const EdgeInsets.only(top: 8, right: 12, bottom: 8),
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: widget.onPressed,
                       style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.all(10),
                           backgroundColor: const Color.fromARGB(165, 153, 180, 121),

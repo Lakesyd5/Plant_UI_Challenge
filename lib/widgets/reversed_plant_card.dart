@@ -3,12 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ReversedPlantCard extends StatefulWidget {
-  const ReversedPlantCard({super.key, required this.plantname, required this.price, required this.imagePath, required this.onTap});
+  const ReversedPlantCard({
+    super.key,
+    required this.plantname,
+    required this.price,
+    required this.imagePath,
+    required this.onTap,
+    required this.onPressed,
+  });
 
   final String plantname;
-  final String price;
+  final num price;
   final String imagePath;
-  final Function() onTap;
+  final Function()? onTap;
+  final void Function()? onPressed;
 
   @override
   State<ReversedPlantCard> createState() => _ReversedPlantCardState();
@@ -49,7 +57,7 @@ class _ReversedPlantCardState extends State<ReversedPlantCard> {
                               style: GoogleFonts.lato(
                                   fontSize: 23, fontWeight: FontWeight.w700)),
                           const SizedBox(height: 5),
-                          Text(widget.price,
+                          Text('\$${widget.price}',
                               style: GoogleFonts.lato(
                                   fontSize: 37, fontWeight: FontWeight.w900))
                         ],
@@ -65,14 +73,15 @@ class _ReversedPlantCardState extends State<ReversedPlantCard> {
                     decoration: const BoxDecoration(
                         color: Color.fromARGB(165, 153, 180, 121),
                         shape: BoxShape.rectangle,
-                        borderRadius:
-                            BorderRadius.only(bottomRight: Radius.circular(30))),
+                        borderRadius: BorderRadius.only(
+                            bottomRight: Radius.circular(30))),
                     padding: const EdgeInsets.only(top: 8, left: 12, bottom: 8),
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: widget.onPressed,
                       style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.all(10),
-                          backgroundColor: const Color.fromARGB(165, 153, 180, 121),
+                          backgroundColor:
+                              const Color.fromARGB(165, 153, 180, 121),
                           shape: CircleBorder(
                               side: BorderSide(
                                   color: Colors.white.withOpacity(0.8),
@@ -100,7 +109,6 @@ class _ReversedPlantCardState extends State<ReversedPlantCard> {
               ),
             ),
           ),
-      
         ]),
       ),
     );

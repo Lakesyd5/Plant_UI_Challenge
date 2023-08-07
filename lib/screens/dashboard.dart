@@ -3,14 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:save_the_plant_ui/model/plant_model.dart';
+import 'package:save_the_plant_ui/providers/cart_state_notifier.dart';
 import 'package:save_the_plant_ui/providers/selected_plant_provider.dart';
 import 'package:save_the_plant_ui/screens/plant_details.dart';
 import 'package:save_the_plant_ui/widgets/plant_button.dart';
 import 'package:save_the_plant_ui/widgets/plant_card.dart';
 import 'package:save_the_plant_ui/widgets/reversed_plant_card.dart';
 
-class ScrollTwo extends ConsumerWidget {
-  const ScrollTwo({super.key});
+class Dashboard extends ConsumerWidget {
+  const Dashboard({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -68,21 +69,26 @@ class ScrollTwo extends ConsumerWidget {
                       child: shouldReverse[index]
                           ? ReversedPlantCard(
                                 plantname: items.plantName ?? '',
-                                price: items.price ?? '',
+                                price: items.price ?? 0,
                                 imagePath: items.imagePath ?? '',
                                 onTap: () {
                                   ref.read(selectedPlantProvider.notifier).state = items;
                                   Navigator.push(context, MaterialPageRoute(builder: (context) => PlantDetailScreen()));
+                                }, onPressed: () { 
+                                  ref.read(cartStateNotifier.notifier).addPlantToCart(items);
                                 },
                           )
                           : PlantCard(
                               plantname: items.plantName ?? '',
-                              price: items.price ?? '',
+                              price: items.price ?? 0,
                               imagePath: items.imagePath ?? '', 
                               onTap: () { 
                                 ref.read(selectedPlantProvider.notifier).state = items;
                                 Navigator.push(context, MaterialPageRoute(builder: (context) => PlantDetailScreen()));
-                               },
+                               }, onPressed: () { 
+                                ref.read(cartStateNotifier.notifier).addPlantToCart(items);
+                              },
+
                             ),
                     ),
                   );

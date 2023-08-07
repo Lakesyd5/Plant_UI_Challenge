@@ -82,7 +82,7 @@ class _HomePageState extends State<HomePage> {
                       shape: const CircleBorder( side: BorderSide(color: Colors.black, width: 2.0)),
                     ),
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => const ScrollTwo()));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const Dashboard()));
                       },
                     child: const Icon(CupertinoIcons.arrow_right, size: 40, color: Colors.black),
                   )
